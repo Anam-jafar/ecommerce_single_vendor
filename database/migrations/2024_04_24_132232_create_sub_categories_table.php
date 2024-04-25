@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('sub_category_name');
             $table->string('slug');
             $table->bigInteger('category_id');
+            $table->string('category_name');
             $table->integer('product_count')->default(0);
             $table->boolean('status')->default(1);
             $table->boolean('deleted')->default(0);
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sub__categories');
+        Schema::dropIfExists('sub_categories');
     }
 };

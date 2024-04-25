@@ -34,17 +34,23 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::controller(CategoryController::class)->group(function (){
         Route::get('/admin/all-categories', 'index')->name('allCategories');
-        Route::get('/admin/add-category', 'addCategory')->name('addCategory');
+        Route::match(['get', 'post'],'/admin/add-category', 'addCategory')->name('addCategory');
+        Route::match(['get','put', 'post'], '/admin/edit-category/{id}', 'editCategory')->name('editCategory');
+        Route::get('/admin/delete-category/{id}', 'deleteCategory')->name('deleteCategory');
     });
 
     Route::controller(SubCategoryController::class)->group(function (){
         Route::get('/admin/all-subcategories', 'index')->name('allSubCategories');
-        Route::get('/admin/add-subcategory', 'addSubCategory')->name('addSubCategory');
+        Route::match(['get', 'post'],'/admin/add-subcategory', 'addSubCategory')->name('addSubCategory');
+        Route::match(['get','put', 'post'], '/admin/edit-subcategory/{id}', 'editSubCategory')->name('editSubCategory');
+        Route::get('/admin/delete-subcategory/{id}', 'deleteSubCategory')->name('deleteSubCategory');
     });
 
     Route::controller(ProductController::class)->group(function (){
         Route::get('/admin/all-products', 'index')->name('allProducts');
-        Route::get('/admin/add-product', 'addProduct')->name('addProduct');
+        Route::match(['get', 'post'],'/admin/add-product', 'addProduct')->name('addProduct');
+        Route::match(['get','put', 'post'], '/admin/edit-product/{id}', 'editProduct')->name('editProduct');
+        Route::get('/admin/delete-product/{id}', 'deleteProduct')->name('deleteProduct');
     });
 
     Route::controller(OrderController::class)->group(function (){

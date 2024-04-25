@@ -1,7 +1,7 @@
 @extends('admin.layouts.template')
 
 @section('title')
-Add Sub Category
+Update Sub Category
 @endsection()
 
 @section('content')
@@ -35,7 +35,7 @@ Add Sub Category
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="basic-default-name">Name</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" id="basic-default-name" placeholder="Sub Category name" name= "sub_category_name" />
+                            <input type="text" class="form-control" id="basic-default-name" value="{{ $sub_category->sub_category_name}}" name= "sub_category_name" />
                           </div>
                         </div>
 
@@ -43,7 +43,7 @@ Add Sub Category
                             <label class="col-sm-2 col-form-label" for="category">Category</label>
                             <div class="col-sm-10">
                                 <select class="form-select" id="category" name="category_id">
-                                    <option value="">Select Category</option> <!-- Default option -->
+                                    <option value="{{$sub_category->category_id}}">{{$sub_category->category_name}}</option> <!-- Default option -->
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                     @endforeach
@@ -51,21 +51,19 @@ Add Sub Category
                             </div>
                         </div>
 
-
-
                         <div class="row mb-3">
-                          <label class="col-sm-2 col-form-label" for="status">Status</label>
-                          <div class="col-sm-10">
-                              <select class="form-select" id="status" name="status">
-                              <option value="1">Active</option>
-                              <option value="0">Inactive</option>
-                              </select>
-                          </div>
+                            <label class="col-sm-2 col-form-label" for="status">Status</label>
+                            <div class="col-sm-10">
+                                <select class="form-select" id="status" name="status">
+                                    <option value="1" {{ $sub_category->status == 1 ? 'selected' : '' }}>Active</option>
+                                    <option value="0" {{ $sub_category->status == 0 ? 'selected' : '' }}>Inactive</option>
+                                </select>
+                            </div>
                         </div>
 
                         <div class="row justify-content-end">
                           <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary"><i class='bx bx-plus'></i>Add</button>
+                            <button type="submit" class="btn btn-primary"><i class='bx bxs-edit-alt'></i>Update</button>
                           </div>
                         </div>
                       </form>

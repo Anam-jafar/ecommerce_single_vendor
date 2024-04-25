@@ -18,38 +18,47 @@ Sub-Category list
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Category</th>
                         <th>Products</th>
                         <th>Status</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
+                @foreach ($subcategories as $subcategory)
                     <tr>
-                        <td>
-                            1
+                        <td class="fw-medium">
+                            {{$subcategory->id}}
                         </td>
                         <td class="fw-medium">
-                            Angular Project
+                            {{$subcategory->sub_category_name}}
+                        </td>
+                        <td class="fw-medium">
+                            {{$subcategory->category_name}}
+                        </td>
+                        <td class="fw-medium">
+                            {{$subcategory->product_count}}
                         </td>
                         <td>
-                            <span class="fw-medium">Angular Project</span>
+                            @if ($subcategory->status == 1)
+                                <span class="badge bg-label-primary me-1">Active</span>
+                            @else
+                                <span class="badge bg-label-danger me-1">Inactive</span>
+                            @endif
                         </td>
-                        <td>
-                            <span class="fw-medium">Angular Project</span>
-                        </td>
-                        <td><span class="badge bg-label-primary me-1">Active</span></td>
                         <td>
                             <div class="dropdown">
                                 <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
                                     <i class="bx bx-dots-vertical-rounded"></i>
                                 </button>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                                    <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                                    <a class="dropdown-item" href="{{route('editSubCategory',$subcategory->id)}}"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                                    <a class="dropdown-item" href="{{route('deleteSubCategory',$subcategory->id)}}"><i class="bx bx-trash me-1"></i> Delete</a>
                                 </div>
                             </div>
                         </td>
                     </tr>
+                    @endforeach
                     
                 </tbody>
             </table>

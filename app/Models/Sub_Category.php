@@ -18,6 +18,7 @@ class Sub_Category extends Model
         'sub_category_name',
         'slug',
         'category_id',
+        'category_name',
         'status'
     ];
 }

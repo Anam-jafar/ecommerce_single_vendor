@@ -21,7 +21,17 @@ Add Category
                       <p class="mb-0 text-muted">Add new category using the form below <i class='bx bx-chevron-down'></i></p>
                     </div>
                     <div class="card-body">
-                      <form>
+                      @if ($errors->any())
+                          <div class="alert alert-danger">
+                              <ul>
+                                  @foreach ($errors->all() as $error)
+                                      <li>{{ $error }}</li>
+                                  @endforeach
+                              </ul>
+                          </div>
+                      @endif
+                      <form method="POST">
+                        @csrf
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="basic-default-name">Name</label>
                           <div class="col-sm-10">
@@ -32,7 +42,7 @@ Add Category
                         <div class="row mb-3">
                         <label class="col-sm-2 col-form-label" for="status">Status</label>
                         <div class="col-sm-10">
-                            <select class="form-select" id="status" name="category_status">
+                            <select class="form-select" id="status" name="status">
                             <option value="1">Active</option>
                             <option value="0">Inactive</option>
                             </select>

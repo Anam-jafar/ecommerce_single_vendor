@@ -1,7 +1,7 @@
 @extends('admin.layouts.template')
 
 @section('title')
-Add Product
+Edit Product
 @endsection()
 
 @section('content')
@@ -10,7 +10,7 @@ Add Product
             <!-- Content -->
 
             <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="py-3 mb-4"><span class="text-muted fw-light">products/</span> add_product</h4>
+              <h4 class="py-3 mb-4"><span class="text-muted fw-light">products/</span> edit_product</h4>
 
               <!-- Basic Layout & Basic with Icons -->
               <div class="row">
@@ -18,7 +18,7 @@ Add Product
                 <div class="col-xxl">
                   <div class="card mb-4">
                     <div class="card-header d-flex align-items-center justify-content-between">
-                      <p class="mb-0 text-muted">Add new product using the form below <i class='bx bx-chevron-down'></i></p>
+                      <p class="mb-0 text-muted">Update product using the form below <i class='bx bx-chevron-down'></i></p>
                     </div>
                     <div class="card-body">
                       <form method="POST" enctype="multipart/form-data">
@@ -26,7 +26,7 @@ Add Product
                         <div class="row mb-3">
                           <label class="col-sm-2 col-form-label" for="basic-default-name">Name</label>
                           <div class="col-sm-10">
-                            <input type="text" class="form-control" id="basic-default-name" placeholder="Product name" name= "product_name" />
+                            <input type="text" class="form-control" id="basic-default-name" value="{{ $product->product_name}}" name= "product_name" />
                           </div>
                         </div>
                         <div class="row mb-3">
@@ -34,13 +34,13 @@ Add Product
                                 <label class="col-form-label" for="product_price">Product Price</label>
                             </div>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="product_price" placeholder="Amount in BDT" name="price">
+                                <input type="number" class="form-control" id="product_price" value="{{ $product->price}}" name="price">
                             </div>
                             <div class="col-sm-2">
                                 <label class="col-form-label" for="product_quantity">Product Quantity</label>
                             </div>
                             <div class="col-sm-4">
-                                <input type="number" class="form-control" id="product_quantity" placeholder="Quantity" name="quantity">
+                                <input type="number" class="form-control" id="product_quantity" value="{{ $product->quantity}}" name="quantity">
                             </div>
                         </div>
 
@@ -52,9 +52,8 @@ Add Product
                                 name="description"
                                 id="basic-icon-default-message"
                                 class="form-control"
-                                placeholder="Enter product description here."
                                 aria-label="Enter product description here."
-                                aria-describedby="basic-icon-default-message2"></textarea>
+                                aria-describedby="basic-icon-default-message2">{{ $product->description}}</textarea>
                             </div>
                           </div>
                         </div>
@@ -67,7 +66,9 @@ Add Product
                                 <select class="form-select" id="category" name="product_category_id">
                                     <option value="">Select Category</option> <!-- Default option -->
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                        <option value="{{ $category->id }}" {{ $category->id == $product->product_category_id ? 'selected' : '' }}>
+                                            {{ $category->category_name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -78,7 +79,9 @@ Add Product
                                 <select class="form-select" id="subcategory" name="product_sub_category_id">
                                     <option value="">Select Sub Category</option> <!-- Default option -->
                                     @foreach ($subcategories as $subcategory)
-                                        <option value="{{ $subcategory->id }}">{{ $subcategory->sub_category_name }}</option>
+                                        <option value="{{ $subcategory->id }}" {{ $subcategory->id == $product->product_sub_category_id ? 'selected' : '' }}>
+                                            {{ $subcategory->sub_category_name }}
+                                        </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -88,25 +91,39 @@ Add Product
                             <label class="col-sm-2 col-form-label" for="status">Status</label>
                             <div class="col-sm-10">
                                 <select class="form-select" id="status" name="status">
-                                <option value="1">Active</option>
-                                <option value="0">Inactive</option>
+                                    <option value="1" {{ $product->status == 1 ? 'selected' : '' }}>Active</option>
+                                    <option value="0" {{ $product->status == 0 ? 'selected' : '' }}>Inactive</option>
                                 </select>
                             </div>
                         </div>
+
                         <div class="row mb-3">
                             <label class="col-sm-2 col-form-label" for="formFile">Upload Product Image</label>
                             <div class="col-sm-10">
-                            <input class="form-control" type="file" id="formFile" 
-                            name="product_image"/>
+                                <!-- Show existing image if it exists -->
+                                @if($product->product_image)
+                                    <img src="{{ asset($product->product_image) }}" alt="Product Image" class="img-thumbnail img-fluid mb-2" style="max-height: 200px;">
+                                @else
+                                    <p>No image uploaded</p>
+                                @endif
+
+                                <!-- Input field for uploading new/replacing image -->
+                                <input class="form-control" type="file" id="formFile" name="product_image"/>
+                                <!-- Display the name of the currently uploaded image if exists -->
+                                @if($product->product_image)
+                                    <input type="text" class="form-control mt-2" value="{{ basename($product->product_image) }}" readonly>
+                                @else
+                                    <input type="text" class="form-control mt-2" placeholder="No image uploaded" readonly>
+                                @endif
                             </div>
-                            
                         </div>
+
 
 
 
                         <div class="row justify-content-end">
                           <div class="col-sm-10">
-                            <button type="submit" class="btn btn-primary"><i class='bx bx-plus'></i>Add</button>
+                            <button type="submit" class="btn btn-primary"><i class='bx bxs-edit-alt'></i>Update</button>
                           </div>
                         </div>
                       </form>
