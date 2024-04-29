@@ -5,6 +5,8 @@ App\Http\Controllers\Admin\DashboardController, App\Http\Controllers\Admin\SubCa
 App\Http\Controllers\Admin\OrderController,
 App\Http\Controllers\Admin\ProductController,
 App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\ClinetController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,8 +21,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+// Route::get('/', function () {
+//     return view('users_end.layouts.template');
+// });
+
+Route::controller(HomeController::class)->group(function (){
+    Route::get('/', 'index')->name('home');
+});
+
+Route::controller(ClinetController::class)->group(function (){
+
+    Route::get('/category/{id}', 'categoryProducts')->name('categoryProducts');
+    Route::get('/product-detail/{id}', 'productDetails')->name('productDetails');
+});
+
+Route::middleware(['auth', 'role:user'])->group(function() {
+    
+    // Route::get('/checkout', 'checkout')->name('checkout');
+   
+    Route::controller(ClinetController::class)->group(function (){
+
+        Route::get('/user-profile', 'userProfile')->name('userProfile');
+        Route::post('/add-to-cart', 'addToCart')->name('addToCart');
+        Route::get('/cart-view', 'cartView')->name('cartView');
+        Route::get('/remove-from-cart/{id}', 'removeFromCart')->name('removeFromCart');
+        Route::match(['get', 'post'], '/shipping-address', 'shippingAddress')->name('shippingAddress');
+        Route::match(['get', 'post'], '/confirm-order', 'confirmOrder')->name('confirmOrder');
+    });
 });
 
 Route::get('/dashboard', function () {
