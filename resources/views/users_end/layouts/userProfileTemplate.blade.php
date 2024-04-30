@@ -12,8 +12,8 @@ User Profile
             <div class="col-lg-4">
                 <div class="box_main">
                     <ul>
-                        <li><a href="#">User Info</a></li>
-                        <li><a href="#">Pending Orders</a></li>
+                        <li><a href="{{route('userProfile')}}">User Info</a></li>
+                        <li><a href="{{route('pendingOrders')}}">Pending Orders</a></li>
                         <li><a href="#">History</a></li>
                         <li><a href="#">logout</a></li>
                     </ul>

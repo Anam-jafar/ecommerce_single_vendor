@@ -1,18 +1,18 @@
 @extends('admin.layouts.template')
 
 @section('title')
-Orders
+Pending Orders
 @endsection()
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-<h4 class="py-3 mb-4"><span class="text-muted fw-light">orders/</span> orders</h4>
+<h4 class="py-3 mb-4"><span class="text-muted fw-light">orders/</span> pending_orders</h4>
     <!-- Bootstrap Table with Caption -->
     <div class="card">
         <div class="table-responsive text-nowrap">
             <table class="table">
                 <caption class="ms-4">
-                    List of orders
+                    List of pending orders
                 </caption>
                 <thead>
                     <tr>
@@ -20,7 +20,7 @@ Orders
                         <th>User Info</th>
                         <th>Shipping Address</th>
                         <th>Total Amount</th>
-                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -62,63 +62,17 @@ Orders
                         <td>
                             TK. {{$totalAmount = $products->sum('total_price')}}
                         </td>
-                        @php
-                            $statuses = [
-                                1 => 'In Progress',
-                                2 => 'Delivered',
-                                -1 => 'Canceled'
-                            ];
-                            $orderStatus = $order->status;
-                        @endphp
-
                         <td>
-                            <select name="order_status" class="form-control" onchange="updateOrderStatus(this, {{$order->id}})">
-                                @foreach ($statuses as $statusId => $statusName)
-                                    <option value="{{ $statusId }}" {{ $orderStatus == $statusId ? 'selected' : '' }}>
-                                        {{ $statusName }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <a href="{{route('adminConfirmOrder', $order->id)}}" class="btn btn-primary">Confirm</a>
                         </td>
                     </tr>
                     @endforeach
                 </tbody>
-
             </table>
         </div>
     </div>
     <!-- Bootstrap Table with Caption -->
 </div>
 
-
-<script>
-    function updateOrderStatus(selectElement, orderId) {
-        var statusId = selectElement.value;
-
-        // Get CSRF token
-        var token = '{{ csrf_token() }}';
-
-        // Make AJAX request with CSRF token
-        $.ajax({
-            url: '/update-order-status', // Replace this with your endpoint
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': token
-            },
-            data: {
-                orderId: orderId,
-                statusId: statusId
-            },
-            success: function(response) {
-                // Handle success response
-                console.log('Order status updated successfully.');
-            },
-            error: function(xhr, status, error) {
-                // Handle error
-                console.error('Error updating order status:', error);
-            }
-        });
-    }
-</script>
 
 @endsection()

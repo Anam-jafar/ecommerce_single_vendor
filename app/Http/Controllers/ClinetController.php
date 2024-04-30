@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Order;
 use App\Models\Product;
+use App\Models\OrderItems;
 use App\Models\ShippingInfo;
 use App\Models\User;
 use GuzzleHttp\Handler\Proxy;
@@ -90,13 +92,54 @@ class ClinetController extends Controller
             $shipping_info->user_id = $request->user_id;
 
             if($shipping_info->save()){
-                return view('users_end.confirmOrder');
+                $cart_items = Cart::where('user_id', Auth::id())->get();
+
+                return view('users_end.confirmOrder', compact(['shipping_info', 'cart_items']));
             }
 
         }else{
             return view('users_end.shippingAddress',  compact(['user']));
         }
 
+        
+    }
+
+    public function confirmOrder(Request $request){
+        $user = auth()->user();
+
+        if ($request->isMethod('post')){
+
+        $order = new Order();
+
+        $order->user_id = Auth::id();
+        $order->shipping_address_id = $request->shipping_info_id;
+        $order->status = 0;
+        
+        $cart_items = Cart::where('user_id', Auth::id())->get();
+
+        if($order->save()){
+            foreach($cart_items as $items){
+                $order_items = new OrderItems();
+                $order_items->order_id= $order->id;
+                $order_items->product_id = $items->product_id;
+                $order_items->product_name = Product::where('id', $items->product_id)->value('product_name');
+                $order_items->product_quantity = $items->quantity;
+                $order_items->total_price = $items->total_price;
+                $order_items->save();
+            }
+            Cart::where('user_id', Auth::id())->delete();
+            return redirect()->route('pendingOrders');
+            
+        }
+    }
+    }
+
+    public function pendingOrders(){
+        $orders = Order::where('status', 0)
+               ->where('user_id', Auth::id())
+               ->get();
+
+        return view('users_end.pendingOrders', compact(['orders']));
         
     }
 }

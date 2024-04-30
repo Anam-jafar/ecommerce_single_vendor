@@ -118,16 +118,19 @@
                      </div>
                      <div class="login_menu">
                         <ul>
-                           <li><a href="{{route('cartView')}}">
-                              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-                              <span class="padding_10">Cart</span></a>
+                           <li style="margin-right: 10px;"> <!-- Adjust margin-right for space between icons -->
+                                 <a href="{{ route('cartView') }}">
+                                    <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i> <!-- Added "fa-lg" class for larger size -->
+                                 </a>
                            </li>
-                           <li><a href="{{route('userProfile')}}">
-                              <i class="fa fa-user" aria-hidden="true"></i>
-                              <span class="padding_10">Profile</span></a>
+                           <li>
+                                 <a href="{{ route('userProfile') }}">
+                                    <i class="fa fa-user fa-lg" aria-hidden="true"></i> <!-- Added "fa-lg" class for larger size -->
+                                 </a>
                            </li>
                         </ul>
                      </div>
+
                   </div>
                </div>
             </div>

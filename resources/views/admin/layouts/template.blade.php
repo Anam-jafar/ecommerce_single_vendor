@@ -229,15 +229,28 @@
             <li class="menu-header small text-uppercase">
               <span class="menu-header-text">Orders &amp; Customers</span>
             </li>
-
+            <!-- Orders -->
             <li class="menu-item">
-              <a
-                href="{{ route('allOrders') }}"
-                class="menu-link">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bx bx-notepad"></i>
                 <div data-i18n="Support">Orders</div>
               </a>
+
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="{{ route('allOrders') }}" class="menu-link">
+                    <div data-i18n="Without menu">Orders List</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="{{ route('adminPendingOrders') }}" class="menu-link">
+                    <div data-i18n="Without navbar">Pending Orders</div>
+                  </a>
+                </li>
+              </ul>
             </li>
+
+            <!-- /Orders -->
             <li class="menu-item">
               <a
                 href="#"

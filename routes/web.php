@@ -37,8 +37,6 @@ Route::controller(ClinetController::class)->group(function (){
 
 Route::middleware(['auth', 'role:user'])->group(function() {
     
-    // Route::get('/checkout', 'checkout')->name('checkout');
-   
     Route::controller(ClinetController::class)->group(function (){
 
         Route::get('/user-profile', 'userProfile')->name('userProfile');
@@ -47,6 +45,7 @@ Route::middleware(['auth', 'role:user'])->group(function() {
         Route::get('/remove-from-cart/{id}', 'removeFromCart')->name('removeFromCart');
         Route::match(['get', 'post'], '/shipping-address', 'shippingAddress')->name('shippingAddress');
         Route::match(['get', 'post'], '/confirm-order', 'confirmOrder')->name('confirmOrder');
+        Route::get('/pending-orders', 'pendingOrders')->name('pendingOrders');
     });
 });
 
@@ -82,6 +81,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
     Route::controller(OrderController::class)->group(function (){
         Route::get('/admin/all-orders', 'index')->name('allOrders');
+        Route::get('/admin/pending-orders', 'adminPendingOrders')->name('adminPendingOrders');
+        Route::post('/update-order-status', 'updateOrderStatus')->name('updateOrderStatus');
+        Route::get('admin/confirm-order/{id}', 'adminConfirmOrder')->name('adminConfirmOrder');
     });
 });
 
