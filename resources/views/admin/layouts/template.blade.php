@@ -118,55 +118,13 @@
 
           <ul class="menu-inner py-1">
             <!-- Dashboards -->
-            <li class="menu-item active open">
-              <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                <div data-i18n="Dashboards">Dashboards</div>
-                <div class="badge bg-danger rounded-pill ms-auto">5</div>
+            <li class="menu-item">
+              <a
+                href="{{route('adminDashboard')}}"
+                class="menu-link">
+                <i class="menu-icon tf-icons bx bxs-dashboard"></i>
+                <div data-i18n="Documentation">Dashboard</div>
               </a>
-              <ul class="menu-sub">
-                <li class="menu-item">
-                  <a
-                    href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/dashboards-crm.html"
-                    target="_blank"
-                    class="menu-link">
-                    <div data-i18n="CRM">CRM</div>
-                    <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">Pro</div>
-                  </a>
-                </li>
-                <li class="menu-item active">
-                  <a href="index.html" class="menu-link">
-                    <div data-i18n="Analytics">Analytics</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a
-                    href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/app-ecommerce-dashboard.html"
-                    target="_blank"
-                    class="menu-link">
-                    <div data-i18n="eCommerce">eCommerce</div>
-                    <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">Pro</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a
-                    href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/app-logistics-dashboard.html"
-                    target="_blank"
-                    class="menu-link">
-                    <div data-i18n="Logistics">Logistics</div>
-                    <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">Pro</div>
-                  </a>
-                </li>
-                <li class="menu-item">
-                  <a
-                    href="https://demos.themeselection.com/sneat-bootstrap-html-admin-template/html/vertical-menu-template/app-academy-dashboard.html"
-                    target="_blank"
-                    class="menu-link">
-                    <div data-i18n="Academy">Academy</div>
-                    <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto">Pro</div>
-                  </a>
-                </li>
-              </ul>
             </li>
 
             <li class="menu-header small text-uppercase">
@@ -407,26 +365,22 @@
           <!-- Content wrapper -->
           <div class="content-wrapper">
             @yield('content')
+            <footer class="footer" style="background-color: #f8f9fa;">
+                <div class="container" style="color: #333;">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <p>&copy; {{ date('Y') }} All rights reserved. Developed by <a href="https://github.com/Anam-jafar" style="color: #007bff;">Anam Ibn Jafar</a>.</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
           </div>
-
           <!-- /Content wrapper -->
         </div>
-        <!-- / Layout page -->
+        <!-- / Layout page -->        
       </div>
-
       <!-- Overlay -->
-      <div class="layout-overlay layout-menu-toggle"></div>
-    </div>
     <!-- / Layout wrapper -->
-
-    <div class="buy-now">
-      <a
-        href="https://themeselection.com/item/sneat-bootstrap-html-admin-template/"
-        target="_blank"
-        class="btn btn-danger btn-buy-now"
-        >Upgrade to Pro</a
-      >
-    </div>
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
@@ -450,5 +404,6 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    
   </body>
 </html>
