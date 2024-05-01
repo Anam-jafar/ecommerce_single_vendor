@@ -31,6 +31,9 @@ Route::controller(ClinetController::class)->group(function (){
 
     Route::get('/category/{id}', 'categoryProducts')->name('categoryProducts');
     Route::get('/product-detail/{id}', 'productDetails')->name('productDetails');
+    Route::get('/best-seller', 'bestSeller')->name('bestSeller');
+    Route::get('/new-release', 'newRelease')->name('newRelease');
+    Route::get('/customer-service', 'customerService')->name('customerService');
 });
 
 Route::middleware(['auth', 'role:user'])->group(function() {

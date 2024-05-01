@@ -11,7 +11,9 @@ use App\Models\ShippingInfo;
 use App\Models\User;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Carbon\Carbon;
 
 
 class ClinetController extends Controller
@@ -141,5 +143,31 @@ class ClinetController extends Controller
 
         return view('users_end.pendingOrders', compact(['orders']));
         
+    }
+
+    public function bestSeller(){
+        $products = OrderItems::select('product_id', DB::raw('count(*) as total_orders'))
+        ->groupBy('product_id')
+        ->orderByDesc('total_orders')
+        ->take(6)
+        ->get();
+
+        return view('users_end.bestSeller', compact('products'));
+    }
+
+    public function newRelease(){
+
+
+        $threeDaysAgo = Carbon::now()->subDays(3)->toDateString();
+
+        $products = Product::whereDate('created_at', '>=', $threeDaysAgo)
+                        ->get();
+
+        return view('users_end.newRelease', compact('products'));
+    }
+
+    public function customerService(){
+
+        return view('users_end.customerService');
     }
 }

@@ -49,11 +49,9 @@
                   <div class="col-sm-12">
                      <div class="custom_menu">
                         <ul>
-                           <li><a href="#">Best Sellers</a></li>
-                           <li><a href="#">Gift Ideas</a></li>
-                           <li><a href="#">New Releases</a></li>
-                           <li><a href="#">Today's Deals</a></li>
-                           <li><a href="#">Customer Service</a></li>
+                           <li><a href="{{route('bestSeller')}}">Best Sellers</a></li>
+                           <li><a href="{{route('newRelease')}}">New Releases</a></li>
+                           <li><a href="{{route('customerService')}}">Customer Service</a></li>
                         </ul>
                      </div>
                   </div>
@@ -78,10 +76,10 @@
                <div class="containt_main">
                   <div id="mySidenav" class="sidenav">
                      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-                     <a href="index.html">Home</a>
-                     <a href="fashion.html">Fashion</a>
-                     <a href="electronic.html">Electronic</a>
-                     <a href="jewellery.html">Jewellery</a>
+                     <a href="{{route('home')}}">Home</a>
+                     @foreach($categories as $category)
+                           <a  href="{{route('categoryProducts',$category->id)}}">{{$category->category_name}}</a>
+                     @endforeach
                   </div>
                   <span class="toggle_icon" onclick="openNav()"><img src="{{ asset('users_end/images/toggle-icon.png')}}"></span>
                   <div class="dropdown">
@@ -105,17 +103,6 @@
                      </div>
                   </div>
                   <div class="header_box">
-                     <div class="lang_box ">
-                        <a href="#" title="Language" class="nav-link" data-toggle="dropdown" aria-expanded="true">
-                        <img src="{{ asset('users_end/images/flag-uk.png')}}" alt="flag" class="mr-2 " title="United Kingdom"> English <i class="fa fa-angle-down ml-2" aria-hidden="true"></i>
-                        </a>
-                        <div class="dropdown-menu ">
-                           <a href="#" class="dropdown-item">
-                           <img src="{{ asset('users_end/images/flag-france.png')}}" class="mr-2" alt="flag">
-                           French
-                           </a>
-                        </div>
-                     </div>
                      <div class="login_menu">
                         <ul>
                            <li style="margin-right: 10px;"> <!-- Adjust margin-right for space between icons -->
@@ -147,22 +134,8 @@
 
       @yield('content')
       <!-- footer section start -->
-      <div class="footer_section layout_padding">
+      <div class="footer_section">
          <div class="container">
-            <div class="footer_logo"><a href="index.html"><img src="{{ asset('users_end/images/footer-logo.png')}}"></a></div>
-            <div class="input_bt">
-               <input type="text" class="mail_bt" placeholder="Your Email" name="Your Email">
-               <span class="subscribe_bt" id="basic-addon2"><a href="#">Subscribe</a></span>
-            </div>
-            <div class="footer_menu">
-               <ul>
-                  <li><a href="#">Best Sellers</a></li>
-                  <li><a href="#">Gift Ideas</a></li>
-                  <li><a href="#">New Releases</a></li>
-                  <li><a href="#">Today's Deals</a></li>
-                  <li><a href="#">Customer Service</a></li>
-               </ul>
-            </div>
             <div class="location_main">Help Line  Number : <a href="#">+1 1800 1200 1200</a></div>
          </div>
       </div>
@@ -170,7 +143,7 @@
       <!-- copyright section start -->
       <div class="copyright_section">
          <div class="container">
-            <p class="copyright_text">© 2020 All Rights Reserved. Design by <a href="https://html.design">Free html  Templates</a></p>
+            <p class="copyright_text">© 2024 All Rights Reserved. Developed by <a href="https://github.com/Anam-jafar">Anam Ibn Jafar</a></p>
          </div>
       </div>
       <!-- copyright section end -->
