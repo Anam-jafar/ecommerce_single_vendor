@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\OrderItems;
+use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -49,7 +51,12 @@ class OrderController extends Controller
         $order = Order::find($id);
         $order->status = 1;
         if($order->save()){
+            $products = OrderItems::where('order_id', $id)->get();
+            foreach($products as $product){
+                Product::find($product->product_id)->decrement('quantity', $product->product_quantity);
+            }
             return redirect()->back()->with('success', 'Order confirmed successfully');
+            
         }
     }
 

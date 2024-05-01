@@ -16,23 +16,23 @@ Online Shop
                         <div class="row">
                            <div class="col-sm-12">
                               <h1 class="banner_taital">Get Start <br>Your favriot shoping</h1>
-                              <div class="buynow_bt"><a href="#">Buy Now</a></div>
+                              <div class="buynow_bt"><a href="#1">Shop now</a></div>
                            </div>
                         </div>
                      </div>
                      <div class="carousel-item">
                         <div class="row">
                            <div class="col-sm-12">
-                              <h1 class="banner_taital">Get Start <br>Your favriot shoping</h1>
-                              <div class="buynow_bt"><a href="#">Buy Now</a></div>
+                              <h1 class="banner_taital">New <br>Products Available</h1>
+                              <div class="buynow_bt"><a href="{{route('newRelease')}}">New Releases</a></div>
                            </div>
                         </div>
                      </div>
                      <div class="carousel-item">
                         <div class="row">
                            <div class="col-sm-12">
-                              <h1 class="banner_taital">Get Start <br>Your favriot shoping</h1>
-                              <div class="buynow_bt"><a href="#">Buy Now</a></div>
+                              <h1 class="banner_taital">Don't Miss out <br>the best sellers</h1>
+                              <div class="buynow_bt"><a href="{{route('bestSeller')}}">Best Seller</a></div>
                            </div>
                         </div>
                      </div>
@@ -52,11 +52,20 @@ Online Shop
 
 @section('content')
 
+      <div class="fashion_section">
+         <div id="main_slider">
+            <div class="container mt-5">
+                  <div class="landscape-banner">
+                     <img src="https://img.freepik.com/free-vector/end-season-big-sale-banner-origami-style_23-2148400576.jpg?w=1380&t=st=1714559315~exp=1714559915~hmac=38c4da402b3a725679c89cf87ad0e845d1fa3424b365171c4143cef012fdfcf3" alt="Banner Image" height="100px">
+                  </div>
+            </div>
+         </div>
+      </div>
 
       <!-- fashion section start -->
       <div class="fashion_section">
          <div id="main_slider">
-            <div class="container">
+            <div class="container" id="1">
             @if (session('success'))
          <div class="alert alert-success">
             {{ session('success') }}

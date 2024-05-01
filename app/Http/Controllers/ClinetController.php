@@ -170,4 +170,39 @@ class ClinetController extends Controller
 
         return view('users_end.customerService');
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $products = Product::where('product_name', 'like', "$query%")->get();
+
+        return response()->json($products);
+    }
+
+    public function userOrders(){
+        $orders = Order::where('status', '!=', 0)
+               ->where('user_id', Auth::id())
+               ->get();
+
+        return view('users_end.userOrders', compact(['orders']));
+        
+    }
+
+    public function updateCartItemQuantity(Request $request)
+    {
+        $cartItem = Cart::where('id', $request->cart_id)
+                        ->where('product_id', $request->product_id)
+                        ->first();
+
+        if ($cartItem) {
+            $cartItem->quantity = $request->quantity;
+            $cartItem->total_price = $cartItem->quantity * Product::where('id', $cartItem->product_id)->value('price');
+            $cartItem->save();
+
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false, 'message' => 'Cart item not found.']);
+    }
 }

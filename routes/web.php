@@ -34,6 +34,7 @@ Route::controller(ClinetController::class)->group(function (){
     Route::get('/best-seller', 'bestSeller')->name('bestSeller');
     Route::get('/new-release', 'newRelease')->name('newRelease');
     Route::get('/customer-service', 'customerService')->name('customerService');
+    Route::get('/search', 'search')->name('search');
 });
 
 Route::middleware(['auth', 'role:user'])->group(function() {
@@ -47,6 +48,9 @@ Route::middleware(['auth', 'role:user'])->group(function() {
         Route::match(['get', 'post'], '/shipping-address', 'shippingAddress')->name('shippingAddress');
         Route::match(['get', 'post'], '/confirm-order', 'confirmOrder')->name('confirmOrder');
         Route::get('/pending-orders', 'pendingOrders')->name('pendingOrders');
+        Route::get('/user-orders', 'userOrders')->name('userOrders');
+        Route::post('/update-cart-item-quantity', 'updateCartItemQuantity')->name('updateCartItemQuantity');
+
     });
 });
 

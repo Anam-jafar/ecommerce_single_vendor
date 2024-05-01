@@ -27,7 +27,10 @@ Cart view
                 @endphp
                 <td><img src="{{ asset($product->product_image) }}" alt="" width="100"></td>
                 <td>{{ $product->product_name }}</td>
-                <td>{{ $item->quantity }}</td>
+                <td>
+                    <input type="number" class="quantity-input" value="{{ $item->quantity }}" data-cart-id="{{ $item->id }}" data-product-id="{{ $item->product_id }}">
+                </td>
+
                 <td>{{ $item->total_price }}</td>
                 <td>
                     <a class="btn btn-danger" href="{{route('removeFromCart',$item->id)}}"><i class="bx bx-trash me-1"></i> Remove</a>
@@ -36,6 +39,37 @@ Cart view
             @endforeach
         </tbody>
     </table>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script>
+    $(document).ready(function(){
+        $('.quantity-input').on('input', function(){
+            var newQuantity = $(this).val();
+            var cartId = $(this).data('cart-id');
+            var productId = $(this).data('product-id');
+
+            $.ajax({
+                url: "{{ route('updateCartItemQuantity') }}",
+                type: "POST",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    cart_id: cartId,
+                    product_id: productId,
+                    quantity: newQuantity
+                },
+                success: function(response){
+                    // Handle success response if needed
+                    console.log('Quantity updated successfully.');
+                },
+                error: function(xhr){
+                    // Handle error response if needed
+                    console.error('Error updating quantity:', xhr.responseText);
+                }
+            });
+        });
+    });
+</script>
+
 
     <!-- Black line -->
     

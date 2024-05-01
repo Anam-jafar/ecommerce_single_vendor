@@ -1,5 +1,7 @@
 @php
    $categories = App\Models\Category::where('deleted', '!=', 1)->latest()->get();
+   $item_Count = App\Models\Cart::where('user_id', Auth::id())->count();
+
 @endphp
 <!DOCTYPE html>
 <html lang="en">
@@ -38,6 +40,24 @@
       <link rel="stylesheet" href="{{ asset('users_end/css/owl.carousel.min.css')}}">
       <link rel="stylesoeet" href="{{ asset('users_end/css/owl.theme.default.min.css')}}">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+      <style>
+         html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+         }
+         
+         .content_wrapper {
+            min-height: calc(100% - 50px); /* Adjust 50px according to your footer height */
+            padding-bottom: 50px; /* Adjust according to your footer height */
+         }
+
+         .footer_section {
+            position: relative;
+            bottom: 0;
+            width: 100%;
+         }
+      </style>
    </head>
    <body>
       <!-- banner bg main start -->
@@ -94,21 +114,78 @@
                   <div class="main">
                      <!-- Another variation with a button -->
                      <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search this blog">
-                        <div class="input-group-append">
-                           <button class="btn btn-secondary" type="button" style="background-color: #f26522; border-color:#f26522 ">
-                           <i class="fa fa-search"></i>
-                           </button>
-                        </div>
+                     <input type="text" id="searchInput" class="form-control" placeholder="Search Product">
+                        <!-- Dropdown to display search results -->
+                  <div id="searchResultsDropdown" class="dropdown-menu" style="display: none;"></div>
                      </div>
+                  
+                        <!-- Include jQuery library -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+      <script>
+
+      var productDetailsRoute = "{{ route('productDetails', ['id' => '__id__']) }}";
+
+
+      $(document).ready(function(){
+         $('#searchInput').on('input', function(){
+            var query = $(this).val();
+            var token = '{{ csrf_token() }}';
+            if(query.length>0){
+            $.ajax({
+                  url: "{{ route('search') }}",
+                  type: "GET",
+                  data: {query: query},
+                  headers: {
+                     'X-CSRF-TOKEN': token
+                  },
+                  success: function(response){
+                     // Update dropdown with search results
+                     displaySearchResults(response);
+                  },
+                  error: function(xhr){
+                     console.log(xhr.responseText);
+                  }
+            });
+            }
+            else{
+               $('#searchResultsDropdown').hide();
+            }
+         });
+
+         // Function to display search results in dropdown
+         function displaySearchResults(products) {
+            var dropdownContent = '';
+
+            // Generate HTML for each product in the search results
+            products.forEach(function(product) {
+                  dropdownContent += '<a class="dropdown-item" href="' + productDetailsRoute.replace('__id__', product.id) + '">';
+
+                  dropdownContent += '<img src="' + product.product_image + '" alt="' + product.product_name + '" class="mr-2" style="width: 50px;">';
+                  dropdownContent += product.product_name;
+                  dropdownContent += '</a>';
+                  console.log(product.product_name)
+            });
+
+            // Display dropdown with search results
+            $('#searchResultsDropdown').html(dropdownContent);
+            $('#searchResultsDropdown').show();
+         }
+      });
+      </script>
                   </div>
                   <div class="header_box">
                      <div class="login_menu">
                         <ul>
                            <li style="margin-right: 10px;"> <!-- Adjust margin-right for space between icons -->
-                                 <a href="{{ route('cartView') }}">
-                                    <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i> <!-- Added "fa-lg" class for larger size -->
-                                 </a>
+                              <a href="{{ route('cartView') }}">
+                                 <i class="fa fa-shopping-cart fa-lg" aria-hidden="true"></i>
+                                 @php
+                                       if ($item_Count > 0) {
+                                          echo '<span class="badge badge-pill badge-danger">' . $item_Count . '</span>';
+                                       }
+                                 @endphp
+                              </a>
                            </li>
                            <li>
                                  <a href="{{ route('userProfile') }}">
@@ -131,21 +208,21 @@
       <!-- banner bg main end -->
       
 
-
+      <div class="content_wrapper">
       @yield('content')
+      </div>
       <!-- footer section start -->
       <div class="footer_section">
          <div class="container">
-            <div class="location_main">Help Line  Number : <a href="#">+1 1800 1200 1200</a></div>
+            <div class="location_main">Help Line Number: <a href="#">+1 1800 1200 1200</a></div>
          </div>
-      </div>
-      <!-- footer section end -->
-      <!-- copyright section start -->
-      <div class="copyright_section">
          <div class="container">
             <p class="copyright_text">© 2024 All Rights Reserved. Developed by <a href="https://github.com/Anam-jafar">Anam Ibn Jafar</a></p>
          </div>
       </div>
+      <!-- footer section end -->
+      <!-- copyright section start -->
+
       <!-- copyright section end -->
       <!-- Javascript files-->
       <script src="{{ asset('users_end/js/jquery.min.js')}}"></script>
@@ -165,5 +242,6 @@
            document.getElementById("mySidenav").style.width = "0";
          }
       </script>
+
    </body>
 </html>
