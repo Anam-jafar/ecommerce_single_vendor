@@ -67,7 +67,7 @@ Add Product
                                 <select class="form-select" id="category" name="product_category_id">
                                     <option value="">Select Category</option> <!-- Default option -->
                                     @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                                    <option value="{{ $category->id }}">{{ $category->category_name }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -75,11 +75,8 @@ Add Product
                                 <label class="col-form-label" for="subcategory">Sub-category</label>
                             </div>
                             <div class="col-sm-4">
-                                <select class="form-select" id="subcategory" name="product_sub_category_id">
+                                <select class="form-select" id="subcategory" name="product_sub_category_id" disabled>
                                     <option value="">Select Sub Category</option> <!-- Default option -->
-                                    @foreach ($subcategories as $subcategory)
-                                        <option value="{{ $subcategory->id }}">{{ $subcategory->sub_category_name }}</option>
-                                    @endforeach
                                 </select>
                             </div>
                         </div>
@@ -116,8 +113,35 @@ Add Product
               </div>
             </div>
             <!-- / Content -->
-
-            <div class="content-backdrop fade"></div>
+            <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+            <script>
+                $(document).ready(function () {
+                    $('#category').change(function () {
+                        var categoryId = $(this).val();
+                        if (categoryId) {
+                            $('#subcategory').prop('disabled', false);
+                            $('#subcategory').html('<option value="">Loading...</option>');
+                            $.ajax({
+                                type: "POST",
+                                url: "{{ route('getSubcategories') }}",
+                                data: {
+                                    _token: "{{ csrf_token() }}",
+                                    categoryId: categoryId
+                                },
+                                success: function (subcategories) {
+                                    $('#subcategory').html('<option value="">Select Sub Category</option>');
+                                    subcategories.forEach(function (subcategory) {
+                                        $('#subcategory').append('<option value="' + subcategory.id + '">' + subcategory.sub_category_name + '</option>');
+                                    });
+                                }
+                            });
+                        } else {
+                            $('#subcategory').prop('disabled', true);
+                            $('#subcategory').html('<option value="">Select Sub Category</option>');
+                        }
+                    });
+                });
+            </script>
 
 
 @endsection()

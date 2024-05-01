@@ -60,7 +60,7 @@ Dashboard - Admin
             </a>
         </div>
         <div class="col-md-4">
-            <a href="#" style="text-decoration: none;">
+            <a href="{{route('customerList')}}" style="text-decoration: none;">
                 <div class="card text-white" style="background-color: #696cff; margin-bottom: 10px;">
                     <div class="card-body">
                         <h5 class="card-title" style="color: white;">Customers</h5>

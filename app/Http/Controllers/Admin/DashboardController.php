@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 
+
 class DashboardController extends Controller
 {
     public function index() {
@@ -23,7 +24,9 @@ class DashboardController extends Controller
         ->count();
         $pendingOrderCount = Order::where('status', 0)
         ->count();
-        $customerCount =User::count();
+        $customerCount = User::join('role_user', 'users.id', '=', 'role_user.user_id')
+        ->where('role_user.role_id', 2)
+        ->count();
 
         $bestSellingProducts = OrderItems::select('product_id', DB::raw('count(*) as total_orders'))
         ->groupBy('product_id')
@@ -59,5 +62,19 @@ class DashboardController extends Controller
 
 
         return view('admin.dashboard', compact(['productCount','categoryCount','subcategoryCount','ongoingOrderCount','pendingOrderCount','customerCount', 'bestSellingProducts', 'worstSellingProducts', 'revenueLabels', 'revenueData']));
+    }
+
+    public function customerList(){
+
+        
+        $customers = User::select('users.*', DB::raw('COUNT(orders.id) as order_count'))
+            ->leftJoin('role_user', 'users.id', '=', 'role_user.user_id')
+            ->leftJoin('orders', 'users.id', '=', 'orders.user_id')
+            ->where('role_user.role_id', 2)
+            ->groupBy('users.id')
+            ->get();
+        
+
+        return view('admin.customers', compact('customers'));
     }
 }

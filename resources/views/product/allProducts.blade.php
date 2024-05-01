@@ -34,7 +34,7 @@ Product list
                             {{$product->id}}
                         </td>
                         <td>
-                            <img src="{{asset($product->product_image)}}" alt="" class="img-thumbnail img-small">
+                            <img src="{{asset($product->product_image)}}" alt="" class="img-thumbnail img-small" width="100px">
                         </td>
                         <td class="fw-medium">
                             {{$product->product_name}}

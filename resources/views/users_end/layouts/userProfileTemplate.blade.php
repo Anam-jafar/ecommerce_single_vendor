@@ -15,7 +15,7 @@ User Profile
                         <li><a href="{{route('userProfile')}}">User Info</a></li>
                         <li><a href="{{route('pendingOrders')}}">Pending Orders</a></li>
                         <li><a href="#">History</a></li>
-                        <li><a href="#">logout</a></li>
+                        <li><a href="{{route('logoutUser')}}">logout</a></li>
                     </ul>
                 </div>
             </div>

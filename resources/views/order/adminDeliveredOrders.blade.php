@@ -44,7 +44,7 @@ Orders
 </style>
 
 <table class="table">
-    <caption class="ms-4">List of orders</caption>
+    <caption class="ms-4">List of delivered orders</caption>
     <thead>
         <tr>
             <th class="order-column">Order</th>
@@ -86,24 +86,11 @@ Orders
                 </ul>
             </td>
             <td class="total-amount-column">TK. {{$totalAmount = $products->sum('total_price')}}</td>
-            @php
-            $statuses = [
-            1 => 'In Progress',
-            2 => 'Delivered',
-            -1 => 'Canceled'
-            ];
-            $orderStatus = $order->status;
-            @endphp
-
+            
             <td class="status-column">
-                <select name="order_status" class="form-control" onchange="updateOrderStatus(this, {{$order->id}})">
-                    @foreach ($statuses as $statusId => $statusName)
-                    <option value="{{ $statusId }}" {{ $orderStatus == $statusId ? 'selected' : '' }}>
-                        {{ $statusName }}
-                    </option>
-                    @endforeach
-                </select>
+                <span class="badge bg-success">Delivered</span>
             </td>
+
         </tr>
         @endforeach
     </tbody>
@@ -114,35 +101,5 @@ Orders
     <!-- Bootstrap Table with Caption -->
 </div>
 
-
-<script>
-    function updateOrderStatus(selectElement, orderId) {
-        var statusId = selectElement.value;
-
-        // Get CSRF token
-        var token = '{{ csrf_token() }}';
-
-        // Make AJAX request with CSRF token
-        $.ajax({
-            url: '/update-order-status', // Replace this with your endpoint
-            method: 'POST',
-            headers: {
-                'X-CSRF-TOKEN': token
-            },
-            data: {
-                orderId: orderId,
-                statusId: statusId
-            },
-            success: function(response) {
-                // Handle success response
-                console.log('Order status updated successfully.');
-            },
-            error: function(xhr, status, error) {
-                // Handle error
-                console.error('Error updating order status:', error);
-            }
-        });
-    }
-</script>
 
 @endsection()

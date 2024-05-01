@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Sub_Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -66,5 +67,12 @@ class CategoryController extends Controller
             return redirect()->route('allCategories')->with('error', 'Category deleted successfully.');
         }
 
+    }
+
+    public function getSubcategories(Request $request)
+    {
+        $categoryId = $request->input('categoryId');
+        $subcategories = Sub_Category::where('category_id', $categoryId)->get();
+        return response()->json($subcategories);
     }
 }

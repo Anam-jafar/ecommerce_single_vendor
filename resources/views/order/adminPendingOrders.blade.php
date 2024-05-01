@@ -10,6 +10,13 @@ Pending Orders
     <!-- Bootstrap Table with Caption -->
     <div class="card">
         <div class="table-responsive text-nowrap">
+            <style>
+                    ul {
+                        list-style-type: none;
+                        padding: 0;
+                        margin: 0;
+                    }
+            </style>
             <table class="table">
                 <caption class="ms-4">
                     List of pending orders

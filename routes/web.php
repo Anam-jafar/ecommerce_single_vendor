@@ -21,12 +21,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('users_end.layouts.template');
-// });
 
 Route::controller(HomeController::class)->group(function (){
     Route::get('/', 'index')->name('home');
+    Route::get('/logout-user', 'logoutUser')->name('logoutUser');
 });
 
 Route::controller(ClinetController::class)->group(function (){
@@ -49,13 +47,12 @@ Route::middleware(['auth', 'role:user'])->group(function() {
     });
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/admin/dashboard', 'index')->name('adminDashboard');
+        Route::get('/admin/customer-list', 'customerList')->name('customerList');
+
     });
 
     Route::controller(CategoryController::class)->group(function (){
@@ -63,6 +60,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         Route::match(['get', 'post'],'/admin/add-category', 'addCategory')->name('addCategory');
         Route::match(['get','put', 'post'], '/admin/edit-category/{id}', 'editCategory')->name('editCategory');
         Route::get('/admin/delete-category/{id}', 'deleteCategory')->name('deleteCategory');
+        Route::post('/get-subcategories', 'getSubcategories')->name('getSubcategories');
+
     });
 
     Route::controller(SubCategoryController::class)->group(function (){
@@ -82,6 +81,7 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::controller(OrderController::class)->group(function (){
         Route::get('/admin/all-orders', 'index')->name('allOrders');
         Route::get('/admin/pending-orders', 'adminPendingOrders')->name('adminPendingOrders');
+        Route::get('/admin/delivered-orders', 'adminDeliveredOrders')->name('adminDeliveredOrders');
         Route::post('/update-order-status', 'updateOrderStatus')->name('updateOrderStatus');
         Route::get('admin/confirm-order/{id}', 'adminConfirmOrder')->name('adminConfirmOrder');
     });

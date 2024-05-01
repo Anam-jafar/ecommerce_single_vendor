@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Sub_Category;
+use Intervention\Image\Facades\Image;
 
 class ProductController extends Controller
 {
@@ -120,4 +121,6 @@ class ProductController extends Controller
         }
 
     }
+
+
 }

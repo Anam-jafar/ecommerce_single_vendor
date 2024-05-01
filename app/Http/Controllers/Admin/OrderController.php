@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Auth;
 class OrderController extends Controller
 {
     public function index(){
-        $orders = Order::where('status', '!=', 0)
-        ->get();
+        $orders = Order::whereNotIn('status', [0, 2])->get();
+
 
         return view('order.allOrders', compact(['orders']));
     }
@@ -51,5 +51,12 @@ class OrderController extends Controller
         if($order->save()){
             return redirect()->back()->with('success', 'Order confirmed successfully');
         }
+    }
+
+    public function adminDeliveredOrders(){
+        $orders = Order::where('status', 2)
+        ->get();
+
+        return view('order.adminDeliveredOrders', compact(['orders']));
     }
 }
