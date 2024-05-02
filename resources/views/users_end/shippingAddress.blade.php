@@ -21,6 +21,18 @@ Provide shipping address
                     </dl>
                     </div>
                 </div>
+                @php 
+                    $shippinginfo = App\Models\ShippingInfo::where('user_id', $user->id)->count(); 
+                @endphp
+
+                @if($shippinginfo>0)
+                <div class="col-12">
+                    <div class="box_main">
+                    <h3>Existing Shipping info</h3>
+                    <a href="{{route('existingShippingInfo')}}" class="btn btn-warning col-md-4">Select from all exisiting</a>
+                    </div>
+                </div>
+                @endif
                 <div class="col-12">
                     <div class="box_main">
                         <form method="POST">

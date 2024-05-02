@@ -55,8 +55,8 @@ Online Shop
       <div class="fashion_section">
          <div id="main_slider">
             <div class="container mt-5">
-                  <div class="landscape-banner">
-                     <img src="https://img.freepik.com/free-vector/end-season-big-sale-banner-origami-style_23-2148400576.jpg?w=1380&t=st=1714559315~exp=1714559915~hmac=38c4da402b3a725679c89cf87ad0e845d1fa3424b365171c4143cef012fdfcf3" alt="Banner Image" height="100px">
+                  <div class="box_main">
+                     <img src="{{asset($banner->image)}}" alt="Banner Image" height="100px">
                   </div>
             </div>
          </div>
@@ -77,7 +77,7 @@ Online Shop
             {{ session('error') }}
          </div>
       @endif
-                <h1 class="fashion_taital">All Products</h1>
+                <h3 class="fashion_taital">All Products</h3>
                 <div class="fashion_section_2">
                     <div class="row">
                         <!-- // -->
@@ -89,13 +89,9 @@ Online Shop
                                 <div class="tshirt_img"><img src="{{asset($product->product_image)}}"></div>
                                 <div class="btn_main">
                                 
-                                    <div class="buy_bt">
-                                    <form action="{{route('addToCart')}}" method="POST">
-                                       @csrf
-                                    <input type="hidden" value="{{$product->id}}" name="product_id">
-                                       <a href="#"  onclick="document.forms[0].submit();">Add to cart</a>
-                                       </form>
-                                    </div>
+                                <div class="buy_bt">
+                                    <a href="{{route('addToCart', $product->id)}}">Add to cart</a>
+                                </div>
 
                                  
 

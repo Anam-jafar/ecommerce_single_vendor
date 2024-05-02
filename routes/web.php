@@ -35,6 +35,7 @@ Route::controller(ClinetController::class)->group(function (){
     Route::get('/new-release', 'newRelease')->name('newRelease');
     Route::get('/customer-service', 'customerService')->name('customerService');
     Route::get('/search', 'search')->name('search');
+    Route::get('/subcategory/{id}', 'subCategoryProducts')->name('subCategoryProducts');
 });
 
 Route::middleware(['auth', 'role:user'])->group(function() {
@@ -42,7 +43,7 @@ Route::middleware(['auth', 'role:user'])->group(function() {
     Route::controller(ClinetController::class)->group(function (){
 
         Route::get('/user-profile', 'userProfile')->name('userProfile');
-        Route::post('/add-to-cart', 'addToCart')->name('addToCart');
+        Route::get('/add-to-cart/{id}', 'addToCart')->name('addToCart');
         Route::get('/cart-view', 'cartView')->name('cartView');
         Route::get('/remove-from-cart/{id}', 'removeFromCart')->name('removeFromCart');
         Route::match(['get', 'post'], '/shipping-address', 'shippingAddress')->name('shippingAddress');
@@ -50,6 +51,8 @@ Route::middleware(['auth', 'role:user'])->group(function() {
         Route::get('/pending-orders', 'pendingOrders')->name('pendingOrders');
         Route::get('/user-orders', 'userOrders')->name('userOrders');
         Route::post('/update-cart-item-quantity', 'updateCartItemQuantity')->name('updateCartItemQuantity');
+        Route::get('/existing-shipping-info', 'existingShippingInfo')->name('existingShippingInfo');
+        Route::get('/use-existing-shipping-info/{id}', 'useExistingShippingInfo')->name('useExistingShippingInfo');
 
     });
 });
@@ -59,6 +62,10 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::controller(DashboardController::class)->group(function () {
         Route::get('/admin/dashboard', 'index')->name('adminDashboard');
         Route::get('/admin/customer-list', 'customerList')->name('customerList');
+        Route::get('/admin/banner-list', 'bannerList')->name('bannerList');
+        Route::match(['get','post'],'/admin/add-banner', 'addBanner')->name('addBanner');
+        Route::get('/admin/activate-banner/{id}', 'activateBanner')->name('activateBanner');
+        Route::get('/admin/deleteBanner/{id}', 'deleteBanner')->name('deleteBanner');
 
     });
 

@@ -37,16 +37,9 @@ Best Seller
                                 <div class="tshirt_img"><img src="{{asset($productDetail->product_image)}}"></div>
                                 <div class="btn_main">
                                 
-                                    <div class="buy_bt">
-                                    <form action="{{route('addToCart')}}" method="POST">
-                                       @csrf
-                                    <input type="hidden" value="{{$productDetail->id}}" name="product_id">
-                                       <a href="#"  onclick="document.forms[0].submit();">Add to cart</a>
-                                       </form>
-                                    </div>
-
-                                 
-
+                                <div class="buy_bt">
+                                    <a href="{{route('addToCart', $productDetail->id)}}">Add to cart</a>
+                                </div>
                                 <div class="seemore_bt"><a href="{{route('productDetails',$productDetail->id)}}">See More</a></div>
                                 </div>
                             </div>

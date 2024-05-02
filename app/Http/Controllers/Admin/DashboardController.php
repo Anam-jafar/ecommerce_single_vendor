@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\banner;
 use App\Models\Category;
 use App\Models\Sub_Category;
 use App\Models\Product;
@@ -76,5 +77,42 @@ class DashboardController extends Controller
         
 
         return view('admin.customers', compact('customers'));
+    }
+
+    public function bannerList(){
+        $banners = banner::latest()->get();
+
+        return view('admin.bannerList', compact('banners'));
+    }
+
+    public function addBanner(Request $request){
+        
+        if($request->isMethod('post')){
+            $banner = new banner();
+            $banner->name = $request->name;
+            $image = $request->file('image');
+            $image_name = hexdec(uniqid()).'.'.$image->getClientOriginalExtension();
+            $image->move(public_path('uploads'), $image_name);
+            $image_url = 'uploads/'.$image_name;
+            $banner->image = $image_url;
+
+            if($banner->save()){
+                return redirect()->route('bannerList')->with('succes', 'Banner added successfully');
+            }
+        }else{
+            return view('admin.addBanner');
+        }
+        
+    }
+    public function deleteBanner($id = null){
+        banner::find($id)->delete();
+
+        return redirect()->route('bannerList');
+    }
+
+    public function activateBanner($id = null){
+        banner::where('status', 1)->update(['status' => 0]);
+        banner::find($id)->update(['status' => 1]);
+        return redirect()->route('bannerList');
     }
 }

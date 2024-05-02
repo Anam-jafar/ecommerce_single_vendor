@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Product;
 use App\Models\OrderItems;
 use App\Models\ShippingInfo;
+use App\Models\Sub_Category;
 use App\Models\User;
 use GuzzleHttp\Handler\Proxy;
 use Illuminate\Http\Request;
@@ -21,8 +22,16 @@ class ClinetController extends Controller
     public function categoryProducts($id=null){
         $products = Product::where('product_category_id', $id)->get();
         $category = Category::findOrFail($id);
+        $subcategories = Sub_Category::where('category_id',$id)->get();
 
-        return view('users_end.categoryProducts', compact(['products', 'category']));
+        return view('users_end.categoryProducts', compact(['products', 'category', 'subcategories']));
+    }
+
+    public function subCategoryProducts($id = null){
+        $products = Product::where('product_sub_category_id', $id)->get();
+        $subcategory = Sub_Category::findOrFail($id);
+        $subcategories = Sub_Category::where('category_id',$subcategory->category_id)->get();
+        return view('users_end.subCategoryProducts', compact(['products', 'subcategories', 'subcategory']));
     }
 
     public function productDetails($id=null){
@@ -32,10 +41,10 @@ class ClinetController extends Controller
         return view('users_end.productDetails', compact(['product', 'products']));
     }
 
-    public function addToCart(Request $request){
+    public function addToCart($id=null){
 
         $cart = Cart::where('user_id', Auth::id())
-        ->where('product_id', $request->product_id)
+        ->where('product_id', $id)
         ->first();
 
         if ($cart) {
@@ -43,10 +52,10 @@ class ClinetController extends Controller
             $cart->total_price = $cart->quantity * Product::where('id', $cart->product_id)->value('price');
         } else {
             $cart = new Cart();
-            $cart->product_id = $request->product_id;
+            $cart->product_id = $id;
             $cart->user_id = Auth::id();
             $cart->quantity = 1;
-            $cart->total_price = $cart->quantity * Product::where('id', $request->product_id)->value('price');
+            $cart->total_price = $cart->quantity * Product::where('id', $id)->value('price');
 
             
         }
@@ -101,9 +110,20 @@ class ClinetController extends Controller
 
         }else{
             return view('users_end.shippingAddress',  compact(['user']));
-        }
+        } 
+    }
 
-        
+    public function existingShippingInfo(){
+        $shippingInfos = ShippingInfo::where('user_id', Auth::id())->get();
+
+        return view('users_end.existingShippingInfo', compact('shippingInfos'));
+    }
+
+    public function useExistingShippingInfo($id = null){
+        $cart_items = Cart::where('user_id', Auth::id())->get();
+        $shipping_info = ShippingInfo::find($id);
+
+        return view('users_end.confirmOrder', compact(['shipping_info', 'cart_items']));
     }
 
     public function confirmOrder(Request $request){
@@ -126,7 +146,7 @@ class ClinetController extends Controller
                 $order_items->product_id = $items->product_id;
                 $order_items->product_name = Product::where('id', $items->product_id)->value('product_name');
                 $order_items->product_quantity = $items->quantity;
-                $order_items->total_price = $items->total_price;
+                $order_items->total_price = $items->total_price+150;
                 $order_items->save();
             }
             Cart::where('user_id', Auth::id())->delete();
@@ -200,7 +220,7 @@ class ClinetController extends Controller
             $cartItem->total_price = $cartItem->quantity * Product::where('id', $cartItem->product_id)->value('price');
             $cartItem->save();
 
-            return response()->json(['success' => true]);
+            return response()->json($cartItem);
         }
 
         return response()->json(['success' => false, 'message' => 'Cart item not found.']);

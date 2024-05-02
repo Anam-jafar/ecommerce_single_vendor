@@ -8,8 +8,21 @@
       <!-- fashion section start -->
       <div class="fashion_section">
          <div id="main_slider">
-            <div class="container">
+            <div class="container" style="max-width: 1600px;">
                 <h1 class="fashion_taital">{{ $category->category_name }} - ({{$category->product_count}})</h1>
+                <div class="row">
+                <div class="col-lg-2">
+                <div class="box_main mt-5">
+                    <h5>Sub Categories</h5>
+                    <hr>
+                    <ul>
+                        @foreach($subcategories as $subcategory)
+                        <li><a href="{{route('subCategoryProducts', $subcategory->id)}}">{{$subcategory->sub_category_name}}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-10">
                 <div class="fashion_section_2">
                     <div class="row">
                         <!-- // -->
@@ -21,11 +34,7 @@
                                 <div class="tshirt_img"><img src="{{asset($product->product_image)}}"></div>
                                 <div class="btn_main">
                                 <div class="buy_bt">
-                                    <form action="{{route('addToCart')}}" method="POST">
-                                        @csrf
-                                        <input type="hidden" value="{{$product->id}}" name="product_id">
-                                        <a href="#"  onclick="document.forms[0].submit();">Add to cart</a>
-                                    </form>
+                                    <a href="{{route('addToCart', $product->id)}}">Add to cart</a>
                                 </div>
                                 <div class="seemore_bt"><a href="{{route('productDetails',$product->id)}}">See More</a></div>
                                 </div>
@@ -33,6 +42,8 @@
                         </div>
                         @endforeach
                     </div>
+                </div>
+                </div>
                 </div>
             </div>
       </div>

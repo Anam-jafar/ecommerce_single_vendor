@@ -164,7 +164,7 @@
                   dropdownContent += '<img src="' + product.product_image + '" alt="' + product.product_name + '" class="mr-2" style="width: 50px;">';
                   dropdownContent += product.product_name;
                   dropdownContent += '</a>';
-                  console.log(product.product_name)
+
             });
 
             // Display dropdown with search results

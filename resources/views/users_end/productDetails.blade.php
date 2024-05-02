@@ -33,15 +33,10 @@ Online Shop
                         </ul>
                     </div>
 
-                    <div class="btn_main">
-                        <form action="{{route('addToCart')}}" method="POST">
-                            @csrf
-                            <input type="hidden" value="{{$product->id}}" name="product_id">
-                            <input class="btn btn-warning" type="submit" value="Add to cart">
-
-                        </form>
-                        
+                    <div class="buy_bt">
+                                    <a href="{{route('addToCart', $product->id)}}">Add to cart</a>
                     </div>
+                    <br>
                 </div>
             </div>
         </div>

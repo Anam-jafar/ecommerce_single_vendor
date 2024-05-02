@@ -185,6 +185,26 @@ $user = Illuminate\Support\Facades\Auth::user();
                 </li>
               </ul>
             </li>
+            <!-- Banner -->
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-chalkboard"></i>
+                <div data-i18n="Support">Banner</div>
+              </a>
+
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="{{ route('bannerList') }}" class="menu-link">
+                    <div data-i18n="Without menu">Banner Lists</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="{{ route('addBanner') }}" class="menu-link">
+                    <div data-i18n="Without navbar">Add banner</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
             <!-- /Product -->
 
             <li class="menu-header small text-uppercase">

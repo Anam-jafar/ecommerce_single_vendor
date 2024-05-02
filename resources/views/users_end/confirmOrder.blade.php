@@ -39,9 +39,14 @@ Provide shipping address
                                     @endphp
                                     <td>{{ $product->product_name }}</td>
                                     <td>{{ $item->quantity }}</td>
-                                    <td>{{ $item->total_price }}</td>
+                                    <td>TK. {{ $item->total_price }}</td>
                                 </tr>
                                 @endforeach
+                                <tr>
+                                    <td></td>
+                                    <td>Delivery Charge</td>
+                                    <td>Tk. 150</td>
+                                </tr>
                             </tbody>
                         </table>
 
@@ -52,7 +57,7 @@ Provide shipping address
                         <!-- Display total price on the right side -->
                         <div class="row justify-content-end">
                             <div class="text-end">
-                                <p><strong>Total Price:</strong> {{ $cart_items->sum('total_price') }}</p>
+                                <p><strong>Total Price:</strong> {{ $cart_items->sum('total_price')+150 }}</p>
                             </div>
                         </div>
                     </div>
