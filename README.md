@@ -1,8 +1,7 @@
 <p align="center">Single Vendor E-commerce Site</p>
 
 <p align="center">
-<a href="https://www.youtube.com/watch?v=z_q4g4lOjD0&t=3s"><img alt="Static Badge" src="https://img.shields.io/badge/Project%20Demo">
-</a>
+<a href="https://www.youtube.com/watch?v=z_q4g4lOjD0&t=3s"><img alt="Static Badge" src="https://img.shields.io/badge/just%20the%20message-8A2BE2"></a>
 </p>
 
 # Single Vendor E-commerce Site
