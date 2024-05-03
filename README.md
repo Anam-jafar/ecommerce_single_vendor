@@ -1,15 +1,10 @@
-<p align="center">Single Vendor E-commerce Site</p>
-
+# Single Vendor E-commerce Site
 <p align="center">
 <a href="https://www.youtube.com/watch?v=z_q4g4lOjD0&t=3s"><img alt="Static Badge" src="https://img.shields.io/badge/watch%20project%20demo-8A2BE2"></a>
 </p>
 
-# Single Vendor E-commerce Site
-
 ## Description
 Single Vendor E-commerce Site is a comprehensive platform designed to empower small businesses with a robust online presence. With an intuitive admin panel and a seamless client interface, this project offers the perfect solution for entrepreneurs looking to expand their reach in the digital marketplace.
-
-[![Project Demo Video](video_link)](video_link)
 
 ## Features
 
@@ -34,7 +29,7 @@ Single Vendor E-commerce Site is a comprehensive platform designed to empower sm
 - **Frontend**: HTML, CSS, Bootstrap, jQuery
 - **Backend**: PHP
 - **AJAX**: Asynchronous JavaScript and XML for seamless data retrieval and interaction
-- **Templates**: Utilized templates from [link1](template_link1) and [link2](template_link2)
+- **Templates**: Utilized templates from [Admin Dashboard](https://themewagon.com/themes/free-responsive-bootstrap-5-html5-admin-template-sneat/) and [Client Site](https://themewagon.com/themes/free-bootstrap-4-html5-ecommerce-website-template-eflyer/)
 
 ## Author
 Anam Ibn Jafar
