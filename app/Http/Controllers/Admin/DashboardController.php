@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\banner;
 use App\Models\Category;
+use App\Models\Notification;
 use App\Models\Sub_Category;
 use App\Models\Product;
 use App\Models\Order;
@@ -114,5 +115,13 @@ class DashboardController extends Controller
         banner::where('status', 1)->update(['status' => 0]);
         banner::find($id)->update(['status' => 1]);
         return redirect()->route('bannerList');
+    }
+
+    public function markAllAsRead($id = null){
+        Notification::where('user_id', $id)
+                    ->where('viewed',0)
+                    ->update(['viewed' => 1]);
+        
+        return redirect()->back();
     }
 }

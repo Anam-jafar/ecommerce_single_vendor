@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Category;
+use App\Models\Notification;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\OrderItems;
@@ -150,6 +151,11 @@ class ClinetController extends Controller
                 $order_items->save();
             }
             Cart::where('user_id', Auth::id())->delete();
+            $notification = new Notification();
+            $notification->user_id = 1;
+            $notification->notification = 'New pending order';
+            $notification->order_id= $order->id;
+            $notification->save();
             return redirect()->route('pendingOrders');
             
         }
@@ -159,6 +165,7 @@ class ClinetController extends Controller
     public function pendingOrders(){
         $orders = Order::where('status', 0)
                ->where('user_id', Auth::id())
+               ->latest()
                ->get();
 
         return view('users_end.pendingOrders', compact(['orders']));
@@ -203,6 +210,7 @@ class ClinetController extends Controller
     public function userOrders(){
         $orders = Order::where('status', '!=', 0)
                ->where('user_id', Auth::id())
+               ->latest()
                ->get();
 
         return view('users_end.userOrders', compact(['orders']));
@@ -224,5 +232,45 @@ class ClinetController extends Controller
         }
 
         return response()->json(['success' => false, 'message' => 'Cart item not found.']);
+    }
+
+    public function userNotification(){
+        $notifications = Notification::where('user_id', Auth::id())->where('viewed', 0)->latest()->get();
+
+        return view('users_end.userNotification', compact(['notifications']));
+    }
+
+    public function viewNotification($id= null){
+        $notification = Notification::find($id);
+        $notification->viewed = 1;
+        $notification->save();
+
+        $order = Order::find($notification->order_id);
+        $cart_items = OrderItems::where('order_id', $order->id)->get();
+    
+        $shipping_info = ShippingInfo::find($order->shipping_address_id);
+
+        return view('users_end.userOrderDetails', compact(['shipping_info', 'cart_items', 'order']));
+    }
+    public function markAsReadNotification($id=null){
+        $notification = Notification::find($id);
+        $notification->viewed = 1;
+        $notification->save();
+        return redirect()->back(); 
+    }
+    public function markAllAsReadNotification(){
+        Notification::where('user_id', Auth::id())
+        ->where('viewed',0)
+        ->update(['viewed' => 1]);
+        return redirect()->back();
+    }
+
+    public function userOrderDetails($id = null){
+        $order = Order::find($id);
+        $cart_items = OrderItems::where('order_id', $id)->get();
+    
+        $shipping_info = ShippingInfo::find($order->shipping_address_id);
+
+        return view('users_end.userOrderDetails', compact(['shipping_info', 'cart_items', 'order']));
     }
 }

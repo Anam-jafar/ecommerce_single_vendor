@@ -9,6 +9,7 @@ use App\Http\Controllers\ClinetController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use SebastianBergmann\CodeCoverage\Report\Html\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -53,6 +54,11 @@ Route::middleware(['auth', 'role:user'])->group(function() {
         Route::post('/update-cart-item-quantity', 'updateCartItemQuantity')->name('updateCartItemQuantity');
         Route::get('/existing-shipping-info', 'existingShippingInfo')->name('existingShippingInfo');
         Route::get('/use-existing-shipping-info/{id}', 'useExistingShippingInfo')->name('useExistingShippingInfo');
+        Route::get('/user-notification', 'userNotification')->name('userNotification');
+        Route::get('/user-order-details/{id}', 'userOrderDetails')->name('userOrderDetails');
+        Route::get('/notification-order-details/{id}', 'viewNotification')->name('viewNotification');
+        Route::get('/mark-as-read/{id}', 'markAsReadNotification')->name('markAsReadNotification');
+        Route::get('/mark-all-as-read', 'markAllAsReadNotification')->name('markAllAsReadNotification');
 
     });
 });
@@ -106,6 +112,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/mark-all-as-read/{id}', [DashboardController::class, 'markAllAsRead'])->name('markAllAsRead');
 });
 
 require __DIR__.'/auth.php';

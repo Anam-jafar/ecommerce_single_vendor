@@ -1,6 +1,8 @@
 @php
    $categories = App\Models\Category::where('deleted', '!=', 1)->latest()->get();
    $item_Count = App\Models\Cart::where('user_id', Auth::id())->count();
+   $notifications = App\Models\Notification::where('user_id', Auth::id())->where('viewed',0)->latest()->get();
+   $notification_count = $notifications->count();
 
 @endphp
 <!DOCTYPE html>
@@ -187,6 +189,17 @@
                                  @endphp
                               </a>
                            </li>
+                           <li style="margin-right: 10px;"> <!-- Adjust margin-right for space between icons -->
+                              <a href="{{ route('userNotification')}}">
+                                 <i class="fa fa-bell fa-lg" aria-hidden="true"></i>
+                                 @php
+                                       if ($notification_count > 0) {
+                                          echo '<span class="badge badge-pill badge-danger">' . $notification_count . '</span>';
+                                       }
+                                 @endphp
+                              </a>
+                           </li>
+
                            <li>
                                  <a href="{{ route('userProfile') }}">
                                     <i class="fa fa-user fa-lg" aria-hidden="true"></i> <!-- Added "fa-lg" class for larger size -->

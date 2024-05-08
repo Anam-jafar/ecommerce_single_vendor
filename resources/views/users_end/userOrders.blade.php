@@ -3,7 +3,7 @@
 @section('profile_content')
 
 <div class="product-info">
-<h3 class="m-3">Pending Orders</h3>
+<h3 class="m-3">Orders</h3>
     <table class="table mt-3">
         <thead>
             <tr>
@@ -15,6 +15,7 @@
         </thead>
         <tbody>
             @foreach($orders as $order)
+            
             <tr>
                 @php 
                 $shipping_address = App\Models\ShippingInfo::find($order->shipping_address_id);
@@ -22,6 +23,7 @@
                 @endphp
                 
                 <td>
+                    <a href="{{route('userOrderDetails', $order->id)}}">
                     <ul>
                         <li>
                         @foreach($products as $product)
@@ -29,6 +31,7 @@
                         @endforeach
                         </li>
                     </ul>
+                    </a>
                     
                 </td>
                 <td> 
