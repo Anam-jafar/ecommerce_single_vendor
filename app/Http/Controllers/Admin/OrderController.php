@@ -50,10 +50,10 @@ class OrderController extends Controller
         $notification->user_id = $order->user_id;
         $notification->order_id = $order->id;
         if($statusId==2){
-            $notification->notification = 'Your order with '. $order->id.' has been delivered';
+            $notification->notification = 'Your order with id '. $order->id.' has been delivered';
         }
         elseif($statusId==-1){
-            $notification->notification = 'Your Order with '. $order->id.'has been cancelled';
+            $notification->notification = 'Your Order with id '. $order->id.'has been cancelled';
         }
 
         $notification->save();
@@ -71,7 +71,7 @@ class OrderController extends Controller
             }
             $notification = new Notification();
             $notification->user_id = $order->user_id;
-            $notification->notification = 'Your order with id'. $order->id.'has been confirmed';
+            $notification->notification = 'Your order with id '. $order->id.' has been confirmed';
             $notification->order_id = $order->id;
             $notification->save();
             return redirect()->back()->with('success', 'Order confirmed successfully');
