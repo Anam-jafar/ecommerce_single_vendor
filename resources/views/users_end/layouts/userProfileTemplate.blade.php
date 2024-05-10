@@ -13,6 +13,7 @@ User Profile
                 <div class="box_main">
                     <ul>
                         <li><a href="{{route('userProfile')}}">User Info</a></li>
+                        <li><a href="{{route('userNotification')}}">Notification</a></li>
                         <li><a href="{{route('pendingOrders')}}">Pending Orders</a></li>
                         <li><a href="{{route('userOrders')}}">History</a></li>
                         <li><a href="{{route('logoutUser')}}">logout</a></li>

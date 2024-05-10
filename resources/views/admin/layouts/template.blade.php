@@ -1,5 +1,6 @@
 @php
 $user = Illuminate\Support\Facades\Auth::user();
+$notifications = App\Models\Notification::where('user_id', $user->id)->where('viewed', 0)->latest()->get();
 @endphp
 <!DOCTYPE html>
 
@@ -277,6 +278,43 @@ $user = Illuminate\Support\Facades\Auth::user();
               <!-- /Search -->
 
               <ul class="navbar-nav flex-row align-items-center ms-auto">
+
+              <!-- Notification -->
+              <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                  <i class='bx bx-bell' style='font-size: 2em;'></i>
+                  @php
+                      if ($notifications->count() > 0) {
+                        echo '<span class="badge badge-pill badge-danger">' . $notifications->count() . '</span>';
+                      }
+                  @endphp
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    @php 
+                    if($notifications->count()>0){
+                    @endphp
+                    @foreach($notifications as $notification)
+                    <li>
+                      <a class="dropdown-item" href="{{route('adminPendingOrders')}}">
+                        <span class="align-middle"> {{$notification->notification}} </span>
+                      </a>
+                    </li>
+                    @endforeach
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{{route('markAllAsRead', $notification->user_id)}}">
+                        <span class="align-middle"> Mark All as read </span>
+                      </a>
+                    </li>
+                    @php
+                    }
+                    @endphp
+
+                  </ul>
+                </li>
+                <!--/ Notificatoin -->
 
                 <!-- User -->
                 <li class="nav-item navbar-dropdown dropdown-user dropdown">

@@ -22,6 +22,7 @@
                 @endphp
                 
                 <td>
+                    <a href="{{route('userOrderDetails', $order->id)}}">
                     <ul>
                         <li>
                         @foreach($products as $product)
@@ -29,6 +30,7 @@
                         @endforeach
                         </li>
                     </ul>
+                    </a>
                     
                 </td>
                 <td> 
