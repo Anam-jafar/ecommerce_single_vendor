@@ -35,6 +35,4 @@ Single Vendor E-commerce Site is a comprehensive platform designed to empower sm
 Anam Ibn Jafar
 
 ---
-
-Feel free to customize this README file further to include any additional information specific to your project or audience.
  
